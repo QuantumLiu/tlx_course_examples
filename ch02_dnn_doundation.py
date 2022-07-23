@@ -26,7 +26,7 @@ print("X:\n", x, "\nShape:", x.shape)
 print("W:\n", w, "\nShape", w.shape)
 
 # Bias
-b2 = tlx.constant([0.5,0.4])
+b2 = tlx.constant([0.5, 0.4])
 
 z2 = tlx.matmul(x, w)+b2
 
@@ -34,6 +34,7 @@ print("Z:\n", z2, "\nShape", z2.shape)
 
 
 # Activation
+##Reference: https://en.wikipedia.org/wiki/Activation_function
 # Sigmoid function
 a1 = tlx.nn.activation.Sigmoid()(z1)
 print("Result tlx sigmoid:", a1)
@@ -64,3 +65,22 @@ class ActSoftmax(tlx.nn.Module):
 
 a2_m = ActSoftmax()(z2, axis=-1)
 print("Result your own softmax:", a2_m)
+
+
+# MLP
+from tensorlayerx.nn import Linear
+from tensorlayerx.nn import Sequential
+
+layer_list = []
+layer_list.append(Linear(out_features=3, act=tlx.ReLU,
+                  in_features=3, name='linear1'))
+layer_list.append(Linear(out_features=3, act=tlx.ReLU,
+                  in_features=3, name='linear2'))
+layer_list.append(Linear(out_features=3, act=tlx.ReLU,
+                  in_features=3, name='linear3'))
+layer_list.append(Linear(out_features=2, act=tlx.Softmax,
+                  in_features=3, name='linear4'))
+MLP = Sequential(layer_list)
+
+out = MLP(x)
+print("Neural network output: ", out.shape)
