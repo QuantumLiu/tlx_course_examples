@@ -1,3 +1,5 @@
+from tensorlayerx.nn import Sequential
+from tensorlayerx.nn import Linear
 import tensorlayerx as tlx
 # Single neuro
 
@@ -34,7 +36,7 @@ print("Z:\n", z2, "\nShape", z2.shape)
 
 
 # Activation
-##Reference: https://en.wikipedia.org/wiki/Activation_function
+# Reference: https://en.wikipedia.org/wiki/Activation_function
 # Sigmoid function
 a1 = tlx.nn.activation.Sigmoid()(z1)
 print("Result tlx sigmoid:", a1)
@@ -68,8 +70,6 @@ print("Result your own softmax:", a2_m)
 
 
 # MLP
-from tensorlayerx.nn import Linear
-from tensorlayerx.nn import Sequential
 
 layer_list = []
 layer_list.append(Linear(out_features=3, act=tlx.ReLU,
